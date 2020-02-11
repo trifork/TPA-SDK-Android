@@ -1,0 +1,152 @@
+import groovy.io.FileType
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    group = 'io.tpa.tpalib'
+    version = '5.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 29
+        versionName version
+        consumerProguardFiles 'proguard-rules-consumer.pro'
+        archivesBaseName = "tpalib"
+        manifestPlaceholders = [tpaLibVersion: version]
+    }
+
+    flavorDimensions "target"
+
+    productFlavors {
+        android {
+            dimension "target"
+        }
+        crossPlatform {
+            dimension "target"
+        }
+
+        all { flavor ->
+            task("build${flavor.name.capitalize()}ReleasePackage", type: Copy) {
+                from "${buildDir}/outputs/", "${buildDir}/outputs/aar/"
+                into "${buildDir}/dist/${archivesBaseName}-${version}/"
+                include '*.jar', '*.pom', '*.aar'
+            }
+        }
+    }
+
+    android.sourceSets {
+        // Include protobuf runtime
+        main.java.srcDirs += ['protobuf/src']
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    task writeNewPom() {
+        doLast {
+            pom {
+                project {
+                    packaging 'aar'
+                }
+            }.writeTo("build/outputs/tpalib-" + version + ".pom")
+        }
+    }
+
+    task renameAar() {
+        doLast {
+            buildDir.eachDirMatch("outputs") { outputs ->
+                outputs.eachFileRecurse(FileType.FILES) { file ->
+                    if (file.name.endsWith('-release.aar')) {
+                        file.renameTo(new File(file.parent, "${archivesBaseName}-${defaultConfig.versionName}.aar"))
+                    }
+                    if (file.name.endsWith('-debug.aar')) {
+                        file.renameTo(new File(file.parent, "${archivesBaseName}-${defaultConfig.versionName}-debug.aar"))
+                    }
+                }
+            }
+        }
+    }
+
+    // build a jar with source files
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        archiveClassifier.set 'sources'
+
+        include('**/TPA.java')
+        include('**/TpaConfiguration.java')
+        // LifeCycle
+        include('**/TpaNoCheck.java')
+        include('**/AppLifeCycle.java')
+        include('**/ApplicationEventListener.java')
+        // Analytics
+        include('**/TpaTracker.java')
+        include('**/TpaEvent.java')
+        include('**/TpaTimingEvent.java')
+        // Other
+        include('**/ShakeFeedbackHandler.java')
+        include('**/TpaLog.java')
+        include('**/CrashHandling.java')
+
+        doLast {
+            copy {
+                from 'build/libs/'
+                into 'build/outputs/aar/'
+                include '*.jar'
+            }
+        }
+    }
+
+    task buildReleasepackage(type: Zip) {
+        from "${buildDir}/dist/${archivesBaseName}-${version}/"
+        include '*'
+        archiveFileName.set "${archivesBaseName}-${version}.zip"
+        destinationDirectory.set file("${buildDir}/dist/")
+        doLast {
+            delete "${buildDir}/dist/${archivesBaseName}-${version}/"
+        }
+    }
+
+    artifacts {
+        archives sourcesJar
+    }
+    configurations {
+        sourcesJar.archiveName = "${archivesBaseName}-${defaultConfig.versionName}-sources.jar"
+    }
+
+    afterEvaluate { project ->
+        assembleAndroidRelease.mustRunAfter clean
+        assembleCrossPlatformRelease.mustRunAfter clean
+        sourcesJar.mustRunAfter assembleAndroidRelease, assembleCrossPlatformRelease
+        writeNewPom.mustRunAfter assembleAndroidRelease, assembleCrossPlatformRelease
+        renameAar.mustRunAfter assembleAndroidRelease, assembleCrossPlatformRelease
+
+        productFlavors.all { flavor ->
+            project.tasks.named("build${flavor.name.capitalize()}ReleasePackage") { packageTask ->
+                packageTask.mustRunAfter "assemble${flavor.name.capitalize()}Release", sourcesJar, writeNewPom, renameAar
+                packageTask.dependsOn clean, "assemble${flavor.name.capitalize()}Release", sourcesJar, writeNewPom, renameAar
+                packageTask.finalizedBy buildReleasepackage
+            }
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dir 'libs'
+    }
+    flatDir {
+        dir 'protobuf/libs'
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:support-annotations:28.0.0'
+
+    compileOnly(name: 'tpalib-distribution', ext: 'aar')
+    implementation files('protobuf/libs/protobuf-lite.jar')
+}

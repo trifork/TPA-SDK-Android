@@ -1,0 +1,93 @@
+syntax = "proto2";
+
+package io.tpa.tpalib.protobuf;
+
+option java_outer_classname = "ProtobufMessages";
+
+message BaseMessage {
+	optional Feedback feedback = 1;
+	optional SessionStart session_start = 2;
+	optional SessionEnd session_end = 3;
+	optional SessionLog session_log = 4;
+	optional string date = 5; // DEPRECATED (Use timestamp instead)
+	optional string session_uuid = 6;
+	optional AppEvent event = 7;
+	optional double timestamp = 8; // Unix timestamp
+	optional TimingEvent timing_event = 9;
+	optional Issue issue = 10;
+	optional InstallationEvent installation = 11;
+	optional string message_id = 12; // Unique message id used for de-duplication
+	optional string device_uuid = 13;
+	optional DoubleValueEvent double_value_event = 14;
+}
+
+message SessionStart {
+	optional string device_uuid = 1; // DEPRECATED (use BaseMessage.device_uuid)
+	optional string app_version = 2;
+	repeated StringPair additional_info = 3;
+	optional string version_string = 4;
+}
+
+message SessionEnd {
+	// This message is (currently) intentionally left blank
+}
+
+message SessionLog {
+	optional string log_level = 1;
+	optional string tag = 2;
+	optional string text = 3;
+}
+
+message Feedback {
+	optional string OBSOLETE_date = 1;
+	optional string comment = 2;
+	optional string OBSOLETE_session_uuid = 3;
+	optional string mime_type = 4;
+	optional bytes media = 5;
+}
+
+message AppEvent {
+	optional string category = 1;
+	optional string name = 2;
+	repeated StringPair meta_text = 3;
+	repeated StringBinaryPair meta_binary = 4;
+}
+
+message TimingEvent {
+	optional string category = 1;
+	optional string name = 2;
+	repeated StringPair meta_text = 3;
+	optional uint64 duration = 5; // in milliseconds
+}
+
+message Issue {
+	optional string report = 1;
+	optional bool fatal = 2;
+	optional string kind = 3; // Native,ReactNative,Unity,...
+}
+
+message StringPair {
+	required string key = 1;
+	optional string value = 2;
+}
+
+message StringBinaryPair {
+    required string key = 1;
+    optional bytes value = 2;
+}
+
+message InstallationEvent {
+	enum UpdateType {
+        NO_CHANGE = 0;
+        FRESH_INSTALL = 1;
+        UPDATE = 2;
+    }
+    optional UpdateType update_type = 1;
+}
+
+message DoubleValueEvent {
+	optional string category = 1;
+	optional string name = 2;
+	repeated StringPair meta_text = 3;
+	optional double value = 5;
+}

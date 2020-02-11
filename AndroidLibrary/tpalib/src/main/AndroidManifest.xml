@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.tpa.tpalib.android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application>
+
+        <activity
+            android:name="io.tpa.tpalib.FeedbackActivity"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+
+        <activity
+            android:name="io.tpa.tpalib.ScreenshotPermissionActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.InvisibleActivity"/>
+
+        <meta-data
+            android:name="io.tpa.tpalib.versionname.${tpaLibVersion}"
+            android:value=""/>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <io.tpa.tpalib.ImageDrawingView
+        android:id="@+id/screenshot_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"/>
+
+    <RelativeLayout
+        android:id="@+id/feedback_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_top_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/ui_background_color"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/feedback_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/borderless_btn"
+            android:contentDescription="@string/feedback_pick_color_description"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/ic_arrow_back_white_24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/feedback_button_back"
+            android:layout_toRightOf="@+id/feedback_button_back"
+            android:gravity="center_vertical"
+            android:text="@string/feedback_title"
+            android:textColor="@color/ui_white"
+            android:textSize="18dp"/>
+
+        <ImageButton
+            android:id="@+id/feedback_button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/borderless_btn"
+            android:contentDescription="@string/feedback_send_description"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/ic_send_white_24dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/feedback_button_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_bottom_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ui_background_color"
+        android:visibility="gone">
+
+        <io.tpa.tpalib.ImageButtonSelectColor
+            android:id="@+id/feedback_button_color"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borderless_btn"
+            android:contentDescription="@string/feedback_pick_color_description"/>
+        <!--android:src="@drawable/ic_border_color_white_24dp" />-->
+
+        <ImageButton
+            android:id="@+id/feedback_button_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borderless_btn"
+            android:contentDescription="@string/feedback_write_comment_description"
+            android:src="@drawable/ic_comment_white_24dp"/>
+
+        <ImageButton
+            android:id="@+id/feedback_button_undo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borderless_btn"
+            android:contentDescription="@string/feedback_undo_drawings_description"
+            android:src="@drawable/ic_undo_white_24dp"/>
+
+        <ImageButton
+            android:id="@+id/feedback_button_delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borderless_btn"
+            android:contentDescription="@string/feedback_delete_drawings_description"
+            android:src="@drawable/ic_delete_white_24dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

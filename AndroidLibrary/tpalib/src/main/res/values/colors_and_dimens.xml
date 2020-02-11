@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ui_top_bar_height">56dp</dimen>
+    <dimen name="ui_bottom_bar_height">48dp</dimen>
+    <dimen name="ui_elevation">8dp</dimen>
+    <color name="ui_white">#FFFFFF</color>
+    <color name="ui_background_color">#4f86c6</color>
+    <!--<color name="ui_lollipop_green">#009688</color>-->
+    <color name="ui_lollipop_green">#4f86c6</color>
+
+    <color name="ui_borderless_btn">#11000000</color>
+
+    <dimen name="ui_comment_text_size">14sp</dimen>
+
+    <dimen name="ui_color_picker_button_size">30dp</dimen>
+    <dimen name="ui_color_picker_margin_size">5dp</dimen>
+    <color name="ui_draw_color_1">#4CAF50</color>
+    <color name="ui_draw_color_2">#2196F3</color>
+    <color name="ui_draw_color_3">#E91E63</color>
+    <color name="ui_draw_color_4">#FF9800</color>
+
+    <dimen name="ui_draw_circle_width">1dp</dimen>
+    <dimen name="ui_draw_paint_width">4dp</dimen>
+</resources>

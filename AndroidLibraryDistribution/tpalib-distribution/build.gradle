@@ -1,0 +1,99 @@
+import groovy.io.FileType
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    group = 'io.tpa.tpalib'
+    version = '5.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 29
+        versionName version
+        consumerProguardFiles 'proguard-rules-consumer.pro'
+        archivesBaseName = "tpalib-distribution"
+        manifestPlaceholders = [tpaLibDistributionVersion: version]
+    }
+
+    flavorDimensions "target"
+
+    productFlavors {
+        android {
+            dimension "target"
+        }
+        crossPlatform {
+            dimension "target"
+        }
+
+        all { flavor ->
+            task("build${flavor.name.capitalize()}ReleasePackage", type: Copy) {
+                from "${buildDir}/outputs/", "${buildDir}/outputs/aar/"
+                into "${buildDir}/dist/${archivesBaseName}-${version}/"
+                include '*.jar', '*.pom', '*.aar'
+            }
+        }
+    }
+
+    task writeNewPom() {
+        doLast {
+            pom {
+                project {
+                    packaging 'aar'
+                }
+            }.writeTo("build/outputs/tpalib-distribution-" + version + ".pom")
+        }
+    }
+
+    task renameAar() {
+        doLast {
+            buildDir.eachDirMatch("outputs") { outputs ->
+                outputs.eachFileRecurse(FileType.FILES) { file ->
+                    if (file.name.endsWith('-release.aar')) {
+                        file.renameTo(new File(file.parent, "${archivesBaseName}-${defaultConfig.versionName}.aar"))
+                    }
+                    if (file.name.endsWith('-debug.aar')) {
+                        file.renameTo(new File(file.parent, "${archivesBaseName}-${defaultConfig.versionName}-debug.aar"))
+                    }
+                }
+            }
+        }
+    }
+
+    task buildReleasepackage(type: Zip) {
+        from "${buildDir}/dist/${archivesBaseName}-${version}/"
+        include '*'
+        archiveFileName.set "${archivesBaseName}-${version}.zip"
+        destinationDirectory.set file("${buildDir}/dist/")
+        doLast {
+            delete "${buildDir}/dist/${archivesBaseName}-${version}/"
+        }
+    }
+
+    android.sourceSets {
+        // Include protobuf runtime
+        main.java.srcDirs += ['protobuf/src']
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    afterEvaluate { project ->
+        assembleAndroidRelease.mustRunAfter clean
+        assembleCrossPlatformRelease.mustRunAfter clean
+        writeNewPom.mustRunAfter assembleAndroidRelease, assembleCrossPlatformRelease
+        renameAar.mustRunAfter assembleAndroidRelease, assembleCrossPlatformRelease
+
+        productFlavors.all { flavor ->
+            project.tasks.named("build${flavor.name.capitalize()}ReleasePackage") { packageTask ->
+                packageTask.mustRunAfter "assemble${flavor.name.capitalize()}Release", writeNewPom, renameAar
+                packageTask.dependsOn clean, "assemble${flavor.name.capitalize()}Release", writeNewPom, renameAar
+                packageTask.finalizedBy buildReleasepackage
+            }
+        }
+    }
+}

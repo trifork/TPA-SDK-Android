@@ -1,0 +1,13 @@
+The TPA library comes in two flavors: Android and CrossPlatform.
+Android is the official library used for native apps, CrossPlatform is an internal library used to build libraries for Unity, ReactNative, etc.
+
+The Android library is made accessible through bintray.
+Upload/publish of new version of libraries requires permission to the bintray organization.
+
+To Upload:
+1. Visit bintray.com and sign in.
+2. ?
+3. Done!
+
+The CrossPlatform library should NOT be made accessible through bintray as it contains methods that should not be called from a native app.
+Instead it should be included in CrossPlatform libraries that require it.

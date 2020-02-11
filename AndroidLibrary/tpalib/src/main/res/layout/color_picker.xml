@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!-- NOTE: This layout must retain this hierarchy. Only views of type Button can be added
+               and these buttons must have ColorDrawables as background. -->
+
+    <Button
+        android:layout_width="@dimen/ui_color_picker_button_size"
+        android:layout_height="@dimen/ui_color_picker_button_size"
+        android:layout_marginStart="@dimen/ui_color_picker_margin_size"
+        android:layout_marginLeft="@dimen/ui_color_picker_margin_size"
+        android:layout_marginTop="@dimen/ui_color_picker_margin_size"
+        android:layout_marginBottom="@dimen/ui_color_picker_margin_size"
+        android:background="@color/ui_draw_color_1"/>
+
+    <Button
+        android:layout_width="@dimen/ui_color_picker_button_size"
+        android:layout_height="@dimen/ui_color_picker_button_size"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/ui_color_picker_margin_size"
+        android:layout_marginBottom="@dimen/ui_color_picker_margin_size"
+        android:background="@color/ui_draw_color_2"/>
+
+    <Button
+        android:layout_width="@dimen/ui_color_picker_button_size"
+        android:layout_height="@dimen/ui_color_picker_button_size"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/ui_color_picker_margin_size"
+        android:layout_marginBottom="@dimen/ui_color_picker_margin_size"
+        android:background="@color/ui_draw_color_3"/>
+
+    <Button
+        android:layout_width="@dimen/ui_color_picker_button_size"
+        android:layout_height="@dimen/ui_color_picker_button_size"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/ui_color_picker_margin_size"
+        android:layout_marginEnd="@dimen/ui_color_picker_margin_size"
+        android:layout_marginRight="@dimen/ui_color_picker_margin_size"
+        android:layout_marginBottom="@dimen/ui_color_picker_margin_size"
+        android:background="@color/ui_draw_color_4"/>
+
+</LinearLayout>

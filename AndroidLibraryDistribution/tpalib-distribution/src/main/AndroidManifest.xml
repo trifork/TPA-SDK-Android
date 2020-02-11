@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.tpa.tpalib.distribution">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <application>
+
+        <activity
+            android:name="io.tpa.tpalib.distribution.UpdateActivity"
+            android:launchMode="singleInstance">
+
+        </activity>
+
+        <provider
+            android:name=".FileProvider"
+            android:authorities="${applicationId}.io.tpa.tpalib.distribution"
+            android:exported="true"/>
+
+        <meta-data
+            android:name="io.tpa.tpalib.distribution.versionname.${tpaLibDistributionVersion}"
+            android:value=""/>
+
+    </application>
+
+</manifest>
