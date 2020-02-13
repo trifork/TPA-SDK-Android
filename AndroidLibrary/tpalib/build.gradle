@@ -5,7 +5,7 @@ apply plugin: 'maven'
 
 android {
     group = 'io.tpa.tpalib'
-    version = '5.0.2'
+    version = '5.0.3'
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
