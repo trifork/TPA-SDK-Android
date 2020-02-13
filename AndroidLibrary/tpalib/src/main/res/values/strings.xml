@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="crash_dialog_title">Crash Data</string>
+    <string name="crash_dialog_message">The app found information about previous crashes. Would you like to send this data to the developer?</string>
+    <string name="crash_dialog_negative_button">Dismiss</string>
+    <string name="crash_dialog_positive_button">Send</string>
+
+    <string name="download_failed_dialog_title">Download Failed</string>
+    <string name="download_failed_dialog_message">The update could not be downloaded. Would you like to try again?</string>
+    <string name="download_failed_dialog_negative_button">Cancel</string>
+    <string name="download_failed_dialog_positive_button">Retry</string>
+
+    <string name="update_dialog_title">Update available</string>
+    <string name="update_dialog_message">%s is available.\nInstall update?</string>
+    <string name="update_dialog_negative_button">Dismiss</string>
+    <string name="update_dialog_neutral_button">Release Notes</string>
+    <string name="update_dialog_positive_button">Install</string>
+    
+    <string name="update_available_ticker">Update available for %s</string>
+    <string name="update_available">New version available for test.</string>
+
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_screenshot">Feedback image</string>
+
+    <string name="feedback_comment_popup_title">Feedback comment</string>
+    <string name="feedback_comment_ok">OK</string>
+    <string name="feedback_comment_cancel">CANCEL</string>
+    <string name="feedback_comment_clear">CLEAR</string>
+    <string name="feedback_comment_placeholder">&#8230;</string>
+
+    <string name="feedback_back_description">Go back</string>
+    <string name="feedback_send_description">Send feedback</string>
+    <string name="feedback_pick_color_description">Pick color</string>
+    <string name="feedback_write_comment_description">Comment</string>
+    <string name="feedback_undo_drawings_description">Undo last draw action</string>
+    <string name="feedback_delete_drawings_description">Delete drawings</string>
+
+    <string name="feedback_sent_toast">Feedback sent</string>
+</resources>

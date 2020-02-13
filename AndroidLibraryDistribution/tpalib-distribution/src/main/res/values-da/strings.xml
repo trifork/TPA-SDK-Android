@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="download_failed_dialog_title">Download fejlede</string>
+    <string name="download_failed_dialog_message">Opdateringen kunne ikke downloades. Vil du prøve igen?</string>
+    <string name="download_failed_dialog_negative_button">Nej</string>
+    <string name="download_failed_dialog_positive_button">Prøv igen</string>
+    <string name="download_getting_update">Henter app update</string>
+    <string name="download_storage_permission_denied">Lagertilladelse nødvendig for update</string>
+    <string name="download_storage_permission_button">Tillad brug af lager</string>
+
+    <string name="update_dialog_title">Opdatering tilgængelig</string>
+    <string name="update_dialog_message">%s er tilgængelig.\nInstaller opdatering?</string>
+    <string name="update_dialog_negative_button">Nej</string>
+    <string name="update_dialog_neutral_button">Detaljer</string>
+    <string name="update_dialog_positive_button">Installer</string>
+</resources>
