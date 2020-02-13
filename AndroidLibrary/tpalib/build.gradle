@@ -139,14 +139,11 @@ repositories {
     flatDir {
         dir 'libs'
     }
-    flatDir {
-        dir 'protobuf/libs'
-    }
 }
 
 dependencies {
     implementation 'com.android.support:support-annotations:28.0.0'
 
     compileOnly(name: 'tpalib-distribution', ext: 'aar')
-    implementation files('protobuf/libs/protobuf-lite.jar')
+    compileOnly project(":sunmisc")
 }

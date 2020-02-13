@@ -3,8 +3,6 @@ package io.tpa.tpalib;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.protobuf.CodedOutputStream;
-
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -24,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.tpa.tpalib.protobuf.ProtobufMessages;
+import io.tpa.tpalib.protobuf.runtime.CodedOutputStream;
 
 final class TpaProtobufQueue implements ProtobufReceiver {
 
