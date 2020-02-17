@@ -2,6 +2,12 @@ The Android library is made accessible through bintray.
 Upload/publish of new version of libraries requires permission to the bintray organization.
 
 To Upload:
-1. Visit bintray.com and sign in.
-2. ?
-3. Done!
+1. Visit bintray.com and sign in
+2. Select the "TPA-Android" repository
+3. Select the "TPA-SDK-Android-Distribution" package
+4. Select "Add a Version" on the right hand side
+5. Input the correct version in the input box for "Name" (e.g. "5.0.1") and select "Create"
+6. Choose the "Files" tab
+7. Select the "Upload files" part of the text describing there are no files uploaded for this version (The "Upload files" part is clickable)
+8. Select the 3 files from the zip file (not the zip file itself) and click "Upload"
+9. Done
