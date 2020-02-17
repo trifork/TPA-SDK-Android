@@ -42,20 +42,26 @@ final class TpaProtobufQueue implements ProtobufReceiver {
     }
 
     @Override
-    public void saveProtobufMessage(@NonNull ProtobufMessages.BaseMessage message, boolean sendImmediately) {
+    public boolean saveProtobufMessage(@NonNull ProtobufMessages.BaseMessage message, boolean sendImmediately) {
         // Guard for session uuid null - this can happen in weird circumstances when an app is opened and closed rapidly.
         if (message.getSessionUuid() == null) {
             TpaDebugging.log.w(TAG, "A message was dropped due to missing session uuid!");
-            return;
+            return false;
         }
 
         // Don't queue messages when app is not in foreground
         if (filePersistThread.isPaused()) {
             TpaDebugging.log.w(TAG, "A message was dropped because it was sent after session end.");
-            return;
+            return false;
         }
 
-        messageQueue.offer(new MessageWrapper(message, sendImmediately));
+        boolean offer = messageQueue.offer(new MessageWrapper(message, sendImmediately));
+        if (!offer) {
+            TpaDebugging.log.w(TAG, "A message was dropped because the queue was full");
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -77,8 +83,8 @@ final class TpaProtobufQueue implements ProtobufReceiver {
     private static class MessageWrapper {
 
         @NonNull
-        ProtobufMessages.BaseMessage message;
-        boolean sendImmediately;
+        private ProtobufMessages.BaseMessage message;
+        private boolean sendImmediately;
 
         MessageWrapper(@NonNull ProtobufMessages.BaseMessage message, boolean sendImmediately) {
             this.message = message;
@@ -307,6 +313,7 @@ final class TpaProtobufQueue implements ProtobufReceiver {
 
         private boolean uploadMessage(@NonNull File persistFile) {
             if (uploadURL == null) {
+                TpaDebugging.log.d(TAG, "Uploading failed caused by missing URL");
                 return false;
             }
 
@@ -357,7 +364,8 @@ final class TpaProtobufQueue implements ProtobufReceiver {
             return false;
         }
 
-        private File[] getPendingLogFiles(File directory) {
+        @Nullable
+        private File[] getPendingLogFiles(@NonNull File directory) {
             File[] pendingLogFiles = directory.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String fileName) {

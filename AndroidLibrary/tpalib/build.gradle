@@ -6,12 +6,12 @@ apply plugin: 'maven'
 android {
     group = 'io.tpa.tpalib'
     version = '5.0.3'
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 29
         versionName version
         consumerProguardFiles 'proguard-rules-consumer.pro'

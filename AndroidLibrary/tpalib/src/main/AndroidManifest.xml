@@ -4,6 +4,7 @@
     package="io.tpa.tpalib.android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application>
 
@@ -17,6 +18,12 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.InvisibleActivity"/>
+
+        <service
+            android:name="io.tpa.tpalib.MediaService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection"/>
 
         <meta-data
             android:name="io.tpa.tpalib.versionname.${tpaLibVersion}"

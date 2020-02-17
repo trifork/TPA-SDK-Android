@@ -4,9 +4,7 @@
     <string name="download_failed_dialog_message">The update could not be downloaded. Would you like to try again?</string>
     <string name="download_failed_dialog_negative_button">Cancel</string>
     <string name="download_failed_dialog_positive_button">Retry</string>
-    <string name="download_getting_update">Getting app update</string>
     <string name="download_storage_permission_denied">Storage permission is necessary to perform update</string>
-    <string name="download_storage_permission_button">Accept storage permission</string>
 
     <string name="update_dialog_title">Update available</string>
     <string name="update_dialog_message">%s is available.\nInstall update?</string>
