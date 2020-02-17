@@ -18,7 +18,7 @@ public final class TPA {
     //region Initialize
 
     /**
-     * Initialize tpa.
+     * Initialize TPA.
      *
      * @param context       Usually an Activity or an ApplicationContext
      * @param configuration A {@link TpaConfiguration TpaConfiguration} instance.
@@ -28,7 +28,7 @@ public final class TPA {
     }
 
     /**
-     * Initialize tpa.<br><br>
+     * Initialize TPA.<br><br>
      * This initialization uses the {@code build.properties} file.
      *
      * @param context Usually an Activity or an ApplicationContext
