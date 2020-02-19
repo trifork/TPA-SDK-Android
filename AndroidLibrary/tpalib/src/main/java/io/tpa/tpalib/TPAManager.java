@@ -44,7 +44,7 @@ final class TPAManager {
     private boolean initialized = false;
 
     /**
-     * Initialize tpa.
+     * Initialize TPA.
      *
      * @param context       Usually an Activity or an ApplicationContext
      * @param configuration A {@link TpaConfiguration TpaConfiguration} instance.

@@ -14,7 +14,7 @@ lib.android: clean.release protobuf
 	mkdir -p Release
 	cd AndroidLibraryDistribution; ./gradlew clean buildAndroidReleasePackage;
 	rm -f AndroidLibrary/tpalib/libs/tpalib-distribution.aar
-	cp -r AndroidLibraryDistribution/tpalib-distribution/build/outputs/aar/ AndroidLibrary/tpalib/libs
+	cp -r AndroidLibraryDistribution/tpalib-distribution/build/outputs/aar/tpalib-distribution-*.aar AndroidLibrary/tpalib/libs
 	mv AndroidLibrary/tpalib/libs/*.aar AndroidLibrary/tpalib/libs/tpalib-distribution.aar
 	mv -f AndroidLibraryDistribution/tpalib-distribution/build/dist/* Release/TPALib-Distribution.zip
 	cd AndroidLibrary; ./gradlew clean buildAndroidReleasePackage;

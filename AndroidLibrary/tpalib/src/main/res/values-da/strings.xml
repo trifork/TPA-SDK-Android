@@ -6,14 +6,13 @@
     <string name="crash_dialog_positive_button">Send</string>
 
     <string name="feedback_title">Feedback</string>
-    <string name="feedback_screenshot">Feedback-billede</string>
 
     <string name="feedback_comment_popup_title">Feedback-kommentar</string>
     <string name="feedback_comment_ok">OK</string>
     <string name="feedback_comment_cancel">ANNULLER</string>
     <string name="feedback_comment_clear">SLET</string>
+    <string name="feedback_comment_placeholder">&#8230;</string>
 
-    <string name="feedback_back_description">Tilbage</string>
     <string name="feedback_send_description">Send feedback</string>
     <string name="feedback_pick_color_description">Vælg farve</string>
     <string name="feedback_write_comment_description">Kommentar</string>
@@ -21,5 +20,7 @@
     <string name="feedback_delete_drawings_description">Slet drawings</string>
 
     <string name="feedback_sent_toast">Feedback sendt</string>
-    <string name="feedback_comment_placeholder">&#8230;</string>
+
+    <string name="feedback_media_server_title">Capturing</string>
+    <string name="feedback_media_server_text">Currently trying to capture a screenshot for feedback</string>
 </resources>

@@ -13,6 +13,7 @@ import android.media.ImageReader;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -84,9 +85,41 @@ final class LollipopFeedbackManager extends FeedbackManager {
             return;
         }
 
+        // For Q and above, we need to have a foreground service running before we can use MediaProjection.
+        // So for those scenarios, we start the service, and poll until the service is running, then we can continue
+        // And we make sure to stop the foreground service right after (as it's showing a notification), and also stop the MediaProjection (see function 'cleanupAfterCaptureScreenshot')
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            final Intent serviceIntent = new Intent(currentActivity, MediaService.class);
+            currentActivity.startService(serviceIntent);
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (MediaService.isRunning()) {
+                        captureScreenshotInternal(currentActivity, screenShotCapture);
+                    } else {
+                        handler.postDelayed(this, 500);
+                    }
+                }
+            }, 500);
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handler.removeCallbacksAndMessages(null);
+                }
+            }, 10000);
+        } else {
+            captureScreenshotInternal(currentActivity, screenShotCapture);
+        }
+    }
+
+    private void captureScreenshotInternal(@NonNull final Activity currentActivity, @NonNull final ScreenShotCapture screenShotCapture) {
         final MediaProjection mediaProjection = screenShotCapture.getMediaProjection();
         if (mediaProjection == null) {
             TpaDebugging.log.e(TAG, "Could not access media projection for feedback, aborting.");
+            cleanupAfterCaptureScreenshot(currentActivity, mediaProjection);
             return;
         }
 
@@ -102,9 +135,12 @@ final class LollipopFeedbackManager extends FeedbackManager {
         final ImageReader imageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1);
         mediaProjection.createVirtualDisplay("tpascreenshot", width, height, density, flags, imageReader.getSurface(), null, null);
 
+        final Handler handler = new Handler();
         imageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {
+                handler.removeCallbacksAndMessages(null);
+
                 Image image = null;
                 Bitmap bitmap = null;
                 String screenshotPath = null;
@@ -123,7 +159,7 @@ final class LollipopFeedbackManager extends FeedbackManager {
 
                     screenshotPath = Screenshot.saveToDisk(currentActivity, bitmap);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    TpaDebugging.log.e(TAG, "Image parsing failed", e);
                 } finally {
                     if (bitmap != null) {
                         bitmap.recycle();
@@ -135,8 +171,9 @@ final class LollipopFeedbackManager extends FeedbackManager {
 
                     imageReader.close();
                     imageReader.getSurface().release();
-                    mediaProjection.stop();
                 }
+
+                cleanupAfterCaptureScreenshot(currentActivity, mediaProjection);
 
                 if (screenshotPath != null) {
                     showFeedbackActivity(currentActivity, screenshotPath);
@@ -144,6 +181,22 @@ final class LollipopFeedbackManager extends FeedbackManager {
             }
 
         }, null);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                cleanupAfterCaptureScreenshot(currentActivity, mediaProjection);
+            }
+        }, 5000);
+    }
+
+    private void cleanupAfterCaptureScreenshot(@NonNull Activity currentActivity, @Nullable MediaProjection mediaProjection) {
+        Intent serviceIntent = new Intent(currentActivity, MediaService.class);
+        currentActivity.stopService(serviceIntent);
+
+        if (mediaProjection != null) {
+            mediaProjection.stop();
+        }
     }
 
     @Override
@@ -185,6 +238,7 @@ final class LollipopFeedbackManager extends FeedbackManager {
             if (permissionIntent == null) {
                 return null;
             }
+
             return mediaProjectionManager.getMediaProjection(resultCode, permissionIntent);
         }
     }

@@ -3,8 +3,6 @@ package io.tpa.tpalib;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.protobuf.ByteString;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import io.tpa.tpalib.protobuf.ProtobufMessages;
+import io.tpa.tpalib.protobuf.runtime.ByteString;
 
 final class ProtobufFactory {
 

@@ -6,7 +6,7 @@ import io.tpa.tpalib.protobuf.ProtobufMessages;
 
 interface ProtobufReceiver {
 
-    void saveProtobufMessage(@NonNull ProtobufMessages.BaseMessage message, boolean sendImmediately);
+    boolean saveProtobufMessage(@NonNull ProtobufMessages.BaseMessage message, boolean sendImmediately);
 
     void restart();
 

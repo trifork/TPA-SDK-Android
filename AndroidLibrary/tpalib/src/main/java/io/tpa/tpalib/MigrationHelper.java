@@ -8,9 +8,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
-import static io.tpa.tpalib.TPACrashReporting.TPA_CRASHREPORT_POSTFIX;
-import static io.tpa.tpalib.TPACrashReporting.TPA_CRASHREPORT_PREFIX;
-
 final class MigrationHelper {
 
     private static final String TAG = "MigrationHelper";
@@ -52,7 +49,7 @@ final class MigrationHelper {
             FilenameFilter filter = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return name.startsWith(TPA_CRASHREPORT_PREFIX) && name.endsWith(TPA_CRASHREPORT_POSTFIX);
+                    return name.startsWith(TPACrashReporting.TPA_CRASHREPORT_PREFIX) && name.endsWith(TPACrashReporting.TPA_CRASHREPORT_POSTFIX);
                 }
             };
             File[] files = context.getFilesDir().listFiles(filter);

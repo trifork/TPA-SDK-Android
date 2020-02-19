@@ -83,7 +83,7 @@ class TPACrashReporting extends TpaFeature {
     }
 
     private boolean hasStackTraces() {
-        return (listErrorReports().length > 0);
+        return listErrorReports().length > 0;
     }
 
     private void handleFoundCrashes(@Nullable Activity activity) {
@@ -140,7 +140,7 @@ class TPACrashReporting extends TpaFeature {
     private static class CheckForCrashesTask extends AsyncTask<Void, Void, Boolean> {
 
         @Nullable
-        TPACrashReporting crashReporting;
+        private TPACrashReporting crashReporting;
 
         CheckForCrashesTask(@NonNull TPACrashReporting crashReporting) {
             this.crashReporting = crashReporting;
@@ -164,7 +164,7 @@ class TPACrashReporting extends TpaFeature {
     private static class DeleteOrSendCrashesTask extends AsyncTask<Boolean, Void, Void> {
 
         @Nullable
-        TPACrashReporting crashReporting;
+        private TPACrashReporting crashReporting;
 
         DeleteOrSendCrashesTask(@NonNull TPACrashReporting crashReporting) {
             this.crashReporting = crashReporting;
@@ -287,6 +287,7 @@ class TPACrashReporting extends TpaFeature {
         return report;
     }
 
+    @NonNull
     private JSONObject makeBaseReport(String sessionUUUID, String stacktrace) throws JSONException {
         JSONObject report = new JSONObject();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ", Locale.US);
@@ -310,7 +311,7 @@ class TPACrashReporting extends TpaFeature {
         return report;
     }
 
-    @Nullable
+    @NonNull
     private String makeCrashReport(@NonNull Throwable throwable) throws JSONException, UnsupportedEncodingException {
         String sessionUUID = getSessionUUID();
         if (sessionUUID == null) {
@@ -394,15 +395,13 @@ class TPACrashReporting extends TpaFeature {
 
             File file = new File(crashReportDir, filename);
             String report = makeCrashReport(throwable);
-            if (report == null) {
-                return;
-            }
+
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(report.getBytes("UTF-8"));
             outputStream.flush();
             outputStream.close();
-        } catch (Exception ignored) {
-            // Ignore errors. We're in the process of crashing here...
+        } catch (Exception e) {
+            TpaDebugging.log.e(TAG, "Exception happened while saving crash report", e);
         }
     }
 

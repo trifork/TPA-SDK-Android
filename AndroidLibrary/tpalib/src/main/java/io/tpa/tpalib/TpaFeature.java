@@ -9,6 +9,8 @@ import java.util.Map;
 
 abstract class TpaFeature {
 
+    private static final String TAG = "TpaFeature";
+
     @NonNull
     private ProtobufFactory protobufFactory;
     @NonNull
@@ -56,6 +58,8 @@ abstract class TpaFeature {
                             .build(),
                     true
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A feedback message was dropped because the sessionUUID is null");
         }
     }
 
@@ -69,6 +73,8 @@ abstract class TpaFeature {
                             .build(),
                     true
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A crash message was dropped because the sessionUUID is null");
         }
     }
 
@@ -81,6 +87,8 @@ abstract class TpaFeature {
                             .build(),
                     false
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A log message was dropped because the sessionUUID is null");
         }
     }
 
@@ -93,6 +101,8 @@ abstract class TpaFeature {
                             .build(),
                     true
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A installation message was dropped because the sessionUUID is null");
         }
     }
 
@@ -105,6 +115,8 @@ abstract class TpaFeature {
                             .build(),
                     true
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A session start message was dropped because the sessionUUID is null");
         }
     }
 
@@ -117,6 +129,8 @@ abstract class TpaFeature {
                             .build(),
                     true
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A session end message was dropped because the sessionUUID is null");
         }
     }
 
@@ -129,6 +143,8 @@ abstract class TpaFeature {
                             .build(),
                     false
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A tracking event message was dropped because the sessionUUID is null");
         }
     }
 
@@ -141,6 +157,8 @@ abstract class TpaFeature {
                             .build(),
                     false
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A tracking number event message was dropped because the sessionUUID is null");
         }
     }
 
@@ -153,6 +171,8 @@ abstract class TpaFeature {
                             .build(),
                     false
             );
+        } else {
+            TpaDebugging.log.w(TAG, "A timing event message was dropped because the sessionUUID is null");
         }
     }
 

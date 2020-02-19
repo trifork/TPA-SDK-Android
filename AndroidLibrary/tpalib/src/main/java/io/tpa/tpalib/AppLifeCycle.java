@@ -140,46 +140,36 @@ public class AppLifeCycle {
         }
 
         @Override
-        public void onActivityCreated(Activity activity, Bundle arg1) {
-            if (activity != null) {
-                appLifeCycle.created(activity, arg1);
-            }
+        public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+            appLifeCycle.created(activity, savedInstanceState);
         }
 
         @Override
-        public void onActivityDestroyed(Activity activity) {
+        public void onActivityDestroyed(@NonNull Activity activity) {
         }
 
         @Override
-        public void onActivityPaused(Activity activity) {
-            if (activity != null) {
-                appLifeCycle.paused(activity);
-            }
+        public void onActivityPaused(@NonNull Activity activity) {
+            appLifeCycle.paused(activity);
         }
 
         @Override
-        public void onActivityResumed(Activity activity) {
-            if (activity != null) {
-                appLifeCycle.resumed(activity);
-            }
+        public void onActivityResumed(@NonNull Activity activity) {
+            appLifeCycle.resumed(activity);
         }
 
         @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle arg1) {
-            if (activity != null) {
-                appLifeCycle.saveInstanceState(activity, arg1);
-            }
+        public void onActivitySaveInstanceState(@NonNull Activity activity, @Nullable Bundle outState) {
+            appLifeCycle.saveInstanceState(activity, outState);
         }
 
         @Override
-        public void onActivityStarted(Activity activity) {
+        public void onActivityStarted(@NonNull Activity activity) {
         }
 
         @Override
-        public void onActivityStopped(Activity activity) {
-            if (activity != null) {
-                appLifeCycle.stopped(activity);
-            }
+        public void onActivityStopped(@NonNull Activity activity) {
+            appLifeCycle.stopped(activity);
         }
     }
 }
