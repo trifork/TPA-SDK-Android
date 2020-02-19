@@ -198,9 +198,9 @@ public final class TPA {
      * @param name     name of event
      * @param value    value of event
      */
-    /*public static void trackEvent(@NonNull String category, @NonNull String name, double value) {
+    public static void trackEvent(@NonNull String category, @NonNull String name, double value) {
         TPAManager.getInstance().trackEvent(category, name, value, null);
-    }*/
+    }
 
     /**
      * Track event with specified category and name. Without tags
@@ -210,9 +210,9 @@ public final class TPA {
      * @param value    value of event
      * @param tags     a map of key/value pairs
      */
-    /*public static void trackEvent(@NonNull String category, @NonNull String name, double value, @NonNull Map<String, String> tags) {
+    public static void trackEvent(@NonNull String category, @NonNull String name, double value, @NonNull Map<String, String> tags) {
         TPAManager.getInstance().trackEvent(category, name, value, tags);
-    }*/
+    }
 
     /**
      * Start a time measure. This call creates a timing event with start time at call time.

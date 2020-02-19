@@ -1,3 +1,9 @@
+## 5.1.0
+
+### Enhancements
+* Implemented ability to track numbers by using new overloads of TPA.trackEvent(...)
+
+
 ## 5.0.3
 
 ### Enhancements
