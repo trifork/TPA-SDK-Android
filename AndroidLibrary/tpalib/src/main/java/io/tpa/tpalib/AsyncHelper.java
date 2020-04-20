@@ -20,8 +20,13 @@ class AsyncHelper {
         return executor;
     }
 
+    @Nullable
     @SafeVarargs
     static <Params, Progress, Result> AsyncTask<Params, Progress, Result> executeAsyncTask(AsyncTask<Params, Progress, Result> asyncTask, Params... params) {
-        return asyncTask.executeOnExecutor(getExecutor(), params);
+        if (asyncTask != null) {
+            return asyncTask.executeOnExecutor(getExecutor(), params);
+        } else {
+            return null;
+        }
     }
 }

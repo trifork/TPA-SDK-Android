@@ -66,7 +66,11 @@ class Config {
 
     @NonNull
     private TpaConfiguration loadFromProperties() throws InterruptedException, ExecutionException, ConfigInitializationException {
-        Properties p = AsyncHelper.executeAsyncTask(new LoadPropertiesTask()).get();
+        AsyncTask<Void, Void, Properties> propertiesAsyncTask = AsyncHelper.executeAsyncTask(new LoadPropertiesTask());
+        if (propertiesAsyncTask == null) {
+            throw new ConfigInitializationException("Could not create AsyncTask to read app properties, ignoring.");
+        }
+        Properties p = propertiesAsyncTask.get();
         if (p == null) {
             throw new ConfigInitializationException("Could not read app properties, ignoring.");
         }
