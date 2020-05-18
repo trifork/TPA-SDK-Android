@@ -65,7 +65,7 @@ public class DownloadFileTask extends ContextRetainingTask<String, Integer, Bool
             InputStream input = new BufferedInputStream(connection.getInputStream());
             FileOutputStream output = new FileOutputStream(file);
 
-            byte data[] = new byte[8192];
+            byte[] data = new byte[8192];
             int count;
             long total = 0;
             while ((count = input.read(data)) != -1) {
