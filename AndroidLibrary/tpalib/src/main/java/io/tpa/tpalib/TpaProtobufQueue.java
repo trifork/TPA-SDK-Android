@@ -440,11 +440,15 @@ final class TpaProtobufQueue implements ProtobufReceiver {
                     boolean success = sendLogFilesOrPing();
                     if (!success) {
                         numberOfFailures++;
-                        // We have to do Math.max with 0 to avoid an integer overflow when 'numberOfFailures' go very high, causing a negative number
-                        // That negative number is then lower than the first argument for our Math.min, causing us to attempt Thread.sleep() with a negative number, which will throw an exception
                         long exp = (long) Math.pow(2, numberOfFailures) * 1000;
-                        exp = Math.max(0, exp);
-                        long timeToWait = Math.min(128000, exp);
+                        long timeToWait;
+                        if (exp <= 0) {
+                            //If exp <= 0, numberOfFailures was so high that it caused the 'long' variable to overflow to a negative value (or 0 if its extremely high), so we have a fallback value
+                            timeToWait = 600000; // 10 minutes
+                        } else {
+                            timeToWait = exp;
+                        }
+
                         TpaDebugging.log.d(TAG, "Error uploading files, waiting " + timeToWait + " ms before retrying retrying.");
                         Thread.sleep(timeToWait);
                     } else {

@@ -12,7 +12,7 @@ public class PermissionUtils {
         // For SDK > 23 we don't need permission, as we download to internal storage
         // We only need to check for SDK == 23
 
-        if (Build.VERSION.SDK_INT == 23) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
             int res = activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             return (res == PackageManager.PERMISSION_GRANTED);
         }

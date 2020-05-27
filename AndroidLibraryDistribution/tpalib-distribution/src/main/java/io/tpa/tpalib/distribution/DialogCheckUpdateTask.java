@@ -50,7 +50,7 @@ public class DialogCheckUpdateTask extends CheckUpdateTask implements ShowsUpdat
     }
 
     private boolean isActivityGone(Activity activity) {
-        if (Build.VERSION.SDK_INT >= 17) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return activity == null || activity.isDestroyed() || activity.isFinishing();
         } else {
             return activity == null || activity.isFinishing();
@@ -78,7 +78,7 @@ public class DialogCheckUpdateTask extends CheckUpdateTask implements ShowsUpdat
                 }
 
                 state = State.DISPLAY;
-                if (Build.VERSION.SDK_INT >= 23) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (UpdateConfig.debug()) {
                         Log.d(TAG, "Showing update dialog (fragment)");
                     }

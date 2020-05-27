@@ -83,7 +83,7 @@ public class CheckUpdateMonitor {
                     Log.d(TAG, "resume dialog, state: " + checkUpdateTask.getState());
                 }
 
-                if (Build.VERSION.SDK_INT >= 23) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkUpdateTask = UpdateDialogFragment.newInstance(redoList, ShowsUpdate.State.DISPLAY, simpleUpdate);
                     activity.getFragmentManager().beginTransaction().add((UpdateDialogFragment) checkUpdateTask, "UPDATE_FRAGMENT").commitAllowingStateLoss();
                     // ((UpdateDialogFragment) checkUpdateTask).show(activity.getFragmentManager(), "updateFragment");

@@ -146,7 +146,14 @@ public class DownloadFileTask extends ContextRetainingTask<String, Integer, Bool
             }
         });
 
-        builder.create().show();
+        try {
+            builder.create().show();
+        } catch (Exception e) {
+            //Might fail with showing the dialog if the app is shutting down when we reach this code (In which case the user wouldn't see the dialog anyways)
+            if (UpdateConfig.debug()) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void retry(Context context) {
@@ -154,7 +161,7 @@ public class DownloadFileTask extends ContextRetainingTask<String, Integer, Bool
     }
 
     protected static File getDownloadPath(Context context) {
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // Use internal storage
             return context.getNoBackupFilesDir();
         } else {
@@ -168,7 +175,7 @@ public class DownloadFileTask extends ContextRetainingTask<String, Integer, Bool
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             startInstallPostNougat(context, filename);
         } else {
             startInstallLegacy(context, filename);
