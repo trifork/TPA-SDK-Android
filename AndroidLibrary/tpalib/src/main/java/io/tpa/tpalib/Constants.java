@@ -30,20 +30,31 @@ class Constants {
 
     public static final String TAG = "TPAApp";
 
-    Constants(@NonNull Context context) throws NameNotFoundException {
-        ANDROID_VERSION = android.os.Build.VERSION.RELEASE;
-        PHONE_MODEL = android.os.Build.MODEL;
-        PHONE_MANUFACTURER = android.os.Build.MANUFACTURER;
+    Constants(@NonNull Context context) throws NameNotFoundException, VersionNameMissingException {
+        ANDROID_VERSION = Build.VERSION.RELEASE;
+        PHONE_MODEL = Build.MODEL;
+        PHONE_MANUFACTURER = Build.MANUFACTURER;
 
         PackageManager packageManager = context.getPackageManager();
         PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
         APP_VERSION = "" + packageInfo.versionCode;
-        APP_VERSION_NAME = packageInfo.versionName;
+        String versionName = packageInfo.versionName;
+        if (versionName == null) {
+            throw new VersionNameMissingException("VersionName must not be null");
+        }
+        APP_VERSION_NAME = versionName;
         APP_PACKAGE = packageInfo.packageName;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             FILES_PATH = context.getFilesDir().getAbsolutePath();
         } else {
             FILES_PATH = context.getNoBackupFilesDir().getAbsolutePath();
+        }
+    }
+
+    static class VersionNameMissingException extends RuntimeException {
+
+        VersionNameMissingException(String message) {
+            super(message);
         }
     }
 }
