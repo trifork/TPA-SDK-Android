@@ -210,7 +210,7 @@ abstract class CheckUpdateTask extends AsyncTask<String, String, AppList> {
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (!context.deleteFile(f.getName())) {
                 if (UpdateConfig.debug()) {
                     Log.e(TAG, "Could not delete TPA apk file to clean up");

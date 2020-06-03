@@ -33,6 +33,7 @@ public class UpdateDialogLegacy implements ShowsUpdate {
         }
     }
 
+    @Override
     public void safeDismiss() {
         if (alert != null && alert.isShowing()) {
             alert.dismiss();

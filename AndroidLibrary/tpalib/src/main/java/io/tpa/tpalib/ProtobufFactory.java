@@ -1,5 +1,6 @@
 package io.tpa.tpalib;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -177,14 +178,14 @@ final class ProtobufFactory {
     Map<String, String> getSystemDetails() {
         Map<String, String> result = new HashMap<>();
 
-        result.put("DEVICE:HW", android.os.Build.CPU_ABI);
+        result.put("DEVICE:HW", Build.CPU_ABI);
         result.put("DEVICE:MODEL", constants.PHONE_MANUFACTURER + " " + constants.PHONE_MODEL);
-        result.put("DEVICE:PRODUCT", android.os.Build.PRODUCT);
-        result.put("DEVICE:OS", android.os.Build.VERSION.CODENAME + " " + constants.ANDROID_VERSION);
+        result.put("DEVICE:PRODUCT", Build.PRODUCT);
+        result.put("DEVICE:OS", Build.VERSION.CODENAME + " " + constants.ANDROID_VERSION);
         result.put("MODEL", constants.PHONE_MODEL);
         result.put("MANUFACTURER", constants.PHONE_MANUFACTURER);
-        result.put("VERSION.INCREMENTAL", android.os.Build.VERSION.INCREMENTAL);
-        result.put("ANDROID:SDK", "" + android.os.Build.VERSION.SDK_INT);
+        result.put("VERSION.INCREMENTAL", Build.VERSION.INCREMENTAL);
+        result.put("ANDROID:SDK", "" + Build.VERSION.SDK_INT);
         result.put("VERSION.RELEASE", constants.ANDROID_VERSION);
 
         return result;

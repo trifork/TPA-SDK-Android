@@ -440,7 +440,15 @@ final class TpaProtobufQueue implements ProtobufReceiver {
                     boolean success = sendLogFilesOrPing();
                     if (!success) {
                         numberOfFailures++;
-                        long timeToWait = Math.min(128000, (long) Math.pow(2, numberOfFailures) * 1000);
+                        long exp = (long) Math.pow(2, numberOfFailures) * 1000;
+                        long timeToWait;
+                        if (exp <= 0) {
+                            //If exp <= 0, numberOfFailures was so high that it caused the 'long' variable to overflow to a negative value (or 0 if its extremely high), so we have a fallback value
+                            timeToWait = 600000; // 10 minutes
+                        } else {
+                            timeToWait = exp;
+                        }
+
                         TpaDebugging.log.d(TAG, "Error uploading files, waiting " + timeToWait + " ms before retrying retrying.");
                         Thread.sleep(timeToWait);
                     } else {

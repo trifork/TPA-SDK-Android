@@ -73,6 +73,11 @@ final class TPAManager {
                 Log.e(TAG, "Could not initialize TPA, missing package name");
             }
             return;
+        } catch (Constants.VersionNameMissingException ex) {
+            if (debug) {
+                Log.e(TAG, "Could not initialize TPA, version name must not be null\nThis is normally set in build.gradle of the application");
+            }
+            return;
         }
         final Config config;
         try {
@@ -328,6 +333,7 @@ final class TPAManager {
         }
     }
 
+    @NonNull
     private Config configure(@NonNull Constants constants, @Nullable TpaConfiguration configuration) throws Config.ConfigInitializationException {
         if (configuration != null) {
             return new Config(configuration, constants.APP_PACKAGE);
