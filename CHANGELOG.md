@@ -1,3 +1,9 @@
+## 5.1.1
+
+### Fixed
+* Fixed an issue with Thread.sleep attempting to use a negative number, causing a crash
+* Fixed other various minor bugs
+
 ## 5.1.0
 
 ### Enhancements
