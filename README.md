@@ -8,9 +8,8 @@ TPA is the world leading tool for app distribution to mobile devices. Watch live
 allprojects {
     repositories {
         ...
-        maven {
-            url 'https://dl.bintray.com/tpa/TPA-Android'
-        }
+        jcenter() // This is being deprecated, but can possibly still be used
+        maven { url "https://nexus3.trifork.com/repository/the-perfect-app/" } // This can be used instead of jcenter
     }
 }
 
